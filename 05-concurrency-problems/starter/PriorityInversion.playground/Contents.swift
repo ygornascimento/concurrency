@@ -26,68 +26,41 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 import PlaygroundSupport
 
-/*:
-Tell the playground to continue running, even after it thinks execution has ended.
-You need to do this when working with background tasks.
- */
-
+// Tell the playground to continue running, even after it thinks execution has ended.
+// You need to do this when working with background tasks.
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-let group = DispatchGroup()
-let queue = DispatchQueue.global(qos: .userInteractive)
-let semaphore = DispatchSemaphore(value: 2)
+let high = DispatchQueue.global(qos: .userInteractive)
+let medium = DispatchQueue.global(qos: .userInitiated)
+let low = DispatchQueue.global(qos: .background)
 
-for i in 1...10 {
-    queue.async(group: group) {
-        semaphore.wait()
-        defer { semaphore.signal() }
+let semaphore = DispatchSemaphore(value: 1)
 
-        print("Downloading image \(i).....")
+high.async {
+    // Wait 2 seconds just to be sure all the other tasks have enqueued
+    Thread.sleep(forTimeInterval: 2)
+    semaphore.wait()
+    defer { semaphore.signal() }
 
-        //Simulate a network wait
-        Thread.sleep(forTimeInterval: 3)
-        print("Downloaded image \(i) - ok")
+    print("High priority task is now running")
+}
+
+for i in 1 ... 10 {
+    medium.async {
+        let waitTime = Double(exactly: arc4random_uniform(7))!
+        print("Running medium task \(i)")
+        Thread.sleep(forTimeInterval: waitTime)
     }
 }
 
-// MARK: - Example with image  downloading
+low.async {
+    semaphore.wait()
+    defer { semaphore.signal() }
 
-//let base = "https://wolverine.raywenderlich.com/books/con/image-from-rawpixel-id-"
-//let ids = [ 466881, 466910, 466925, 466931, 466978, 467028, 467032, 467042, 467052 ]
-//
-//var images: [UIImage] = []
-//
-//for id in ids {
-//    guard let url = URL(string: "\(base)\(id)-jpeg.jpg") else { continue }
-//
-//    group.enter()
-//    semaphore.wait()
-//    let task = URLSession.shared.dataTask(with: url) {
-//        data, _, error in
-//        defer {
-//            group.leave()
-//            semaphore.signal()
-//        }
-//        if error == nil, let data = data, let image = UIImage(data: data) {
-//            images.append(image)
-//        }
-//    }
-//    task.resume()
-//}
-//
-//group.notify(queue: queue) {
-//    images[0]
-//    PlaygroundPage.current.finishExecution()
-//}
-
-
-
-// Because we've not specified a time, this will wait indefinitely
-group.wait()
-
-PlaygroundPage.current.finishExecution()
-
+    print("Running long, lowest priority task")
+    Thread.sleep(forTimeInterval: 5)
+}
 
