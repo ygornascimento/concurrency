@@ -1,9 +1,19 @@
-import UIKit
+import Foundation
 
-for i in 1...10 {
-    guard i.isMultiple(of: 3) else {
-        continue
+let sentence  = "Ray's courses are the best!"
+let wordOperation = BlockOperation()
+
+for word in sentence.split(separator: " ") {
+    wordOperation.addExecutionBlock {
+        print(word)
+        sleep(2)
     }
-
-    print(i)
 }
+
+duration {
+    wordOperation.start()
+}
+
+
+
+wordOperation.start()
