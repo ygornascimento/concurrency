@@ -28,10 +28,27 @@
 
 import UIKit
 
-class TiltShiftTableViewController: UITableViewController {
+final class TiltShiftTableViewController: UITableViewController {
 
+  private var urls: [URL] = []
   private let context = CIContext()
   private let queue = OperationQueue()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    guard let urlsPlist = Bundle.main.url(forResource: "Photos", withExtension: "plist"),
+          let contents = try? Data(contentsOf: urlsPlist),
+          let serial = try? PropertyListSerialization.propertyList(
+            from: contents,
+            format: nil  ),
+          let serialUrls = serial as? [String] else {
+        print("No no no no no....")
+        return
+    }
+
+    urls = serialUrls.compactMap(URL.init)
+  }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 10
@@ -40,20 +57,34 @@ class TiltShiftTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "normal", for: indexPath) as! PhotoCell
 
-    let image = UIImage(named: "\(indexPath.row).png")!
+//    let image = UIImage(named: "\(indexPath.row).png")! - Third Attempt
 
-    //MARK: - Third Attempt
-    let imageOperation = TiltShiftOperation(image: image)
+    //MARK: - Fourth Attempt
+    let imageOperation = NetworkImageOperation(url: urls[indexPath.row])
     imageOperation.completionBlock = {
       DispatchQueue.main.async {
         guard let cell = tableView.cellForRow(at: indexPath) as? PhotoCell else { return }
 
         cell.isLoading = false
-        cell.display(image: imageOperation.outputImage)
+        cell.display(image: imageOperation.image)
       }
     }
 
     queue.addOperation(imageOperation)
+
+
+    //MARK: - Third Attempt
+//    let imageOperation = TiltShiftOperation(image: image)
+//    imageOperation.completionBlock = {
+//      DispatchQueue.main.async {
+//        guard let cell = tableView.cellForRow(at: indexPath) as? PhotoCell else { return }
+//
+//        cell.isLoading = false
+//        cell.display(image: imageOperation.outputImage)
+//      }
+//    }
+//
+//    queue.addOperation(imageOperation)
 
     // MARK: - Second Attempt
 //    print("Filtering...")
@@ -63,7 +94,6 @@ class TiltShiftTableViewController: UITableViewController {
 //    cell.display(image: imageOperation.outputImage)
 //    print("Done")
 
-    return cell
 
     // MARK: - First Attempt
 //    cell.display(image: nil)
@@ -93,5 +123,6 @@ class TiltShiftTableViewController: UITableViewController {
 //    cell.display(image: UIImage(cgImage: cgImage))
 //    print("Displaying... \(name)")
 
+    return cell
   }
 }
