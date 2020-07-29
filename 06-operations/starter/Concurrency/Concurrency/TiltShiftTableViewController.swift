@@ -29,7 +29,9 @@
 import UIKit
 
 class TiltShiftTableViewController: UITableViewController {
+
   private let context = CIContext()
+  private let queue = OperationQueue()
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 10
@@ -40,14 +42,30 @@ class TiltShiftTableViewController: UITableViewController {
 
     let image = UIImage(named: "\(indexPath.row).png")!
 
-    print("Filtering...")
+    //MARK: - Third Attempt
     let imageOperation = TiltShiftOperation(image: image)
-    imageOperation.start()
+    imageOperation.completionBlock = {
+      DispatchQueue.main.async {
+        guard let cell = tableView.cellForRow(at: indexPath) as? PhotoCell else { return }
 
-    cell.display(image: imageOperation.outputImage)
-    print("Done")
+        cell.isLoading = false
+        cell.display(image: imageOperation.outputImage)
+      }
+    }
+
+    queue.addOperation(imageOperation)
+
+    // MARK: - Second Attempt
+//    print("Filtering...")
+//    let imageOperation = TiltShiftOperation(image: image)
+//    imageOperation.start()
+//
+//    cell.display(image: imageOperation.outputImage)
+//    print("Done")
+
     return cell
 
+    // MARK: - First Attempt
 //    cell.display(image: nil)
 
 //    let name = "\(indexPath.row).png"
