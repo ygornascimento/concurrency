@@ -28,20 +28,26 @@
 
 import UIKit
 
-final class TiltShiftOperation: Operation {
+final class TiltShiftOperation: Operation, ImageDataProvider {
+
+  var image: UIImage? {
+    return outputImage
+  }
+
 
   private static let context = CIContext()
+  private var outputImage: UIImage?
+  private let inputImage: UIImage?
 
-  var outputImage: UIImage?
-
-  private let inputImage: UIImage
-
-  init(image: UIImage) {
+  init(image: UIImage? = nil) {
     inputImage = image
     super.init()
   }
 
   override func main() {
+    let dependencyImage = dependencies .compactMap { ($0 as? ImageDataProvider)?.image } .first
+    guard let inputImage = inputImage ?? dependencyImage else { return }
+    
     guard let filter = TiltShiftFilter(image: inputImage, radius: 3),
           let output = filter.outputImage else {
         print("Failed to generate tilt shift image")

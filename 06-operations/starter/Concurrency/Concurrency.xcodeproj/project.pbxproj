@@ -19,6 +19,7 @@
 		F47280FA24D189B10014F072 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47280F924D189B10014F072 /* AsyncOperation.swift */; };
 		F47280FC24D189C30014F072 /* Photos.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47280FB24D189C30014F072 /* Photos.plist */; };
 		F47280FE24D189FA0014F072 /* NetworkImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47280FD24D189FA0014F072 /* NetworkImageOperation.swift */; };
+		F4EB999424D2C9F7005A5409 /* ImageDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EB999324D2C9F7005A5409 /* ImageDataProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		F47280F924D189B10014F072 /* AsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsyncOperation.swift; path = "../../../../08-asynchronous-operations/starter/Concurrency/Concurrency/AsyncOperation.swift"; sourceTree = "<group>"; };
 		F47280FB24D189C30014F072 /* Photos.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Photos.plist; path = "../../../../08-asynchronous-operations/starter/Concurrency/Concurrency/Photos.plist"; sourceTree = "<group>"; };
 		F47280FD24D189FA0014F072 /* NetworkImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageOperation.swift; sourceTree = "<group>"; };
+		F4EB999324D2C9F7005A5409 /* ImageDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				D274374F2211DC9F00B1E02F /* TiltShiftTableViewController.swift */,
 				F42A24F724D0346000EB55F8 /* TiltShiftOperation.swift */,
 				F47280FD24D189FA0014F072 /* NetworkImageOperation.swift */,
+				F4EB999324D2C9F7005A5409 /* ImageDataProvider.swift */,
 			);
 			path = Concurrency;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				D2CC8F0F220890C50025B523 /* TiltShiftFilter.swift in Sources */,
 				D2CC8F11220C93EF0025B523 /* ExampleViewController.swift in Sources */,
 				F47280FE24D189FA0014F072 /* NetworkImageOperation.swift in Sources */,
+				F4EB999424D2C9F7005A5409 /* ImageDataProvider.swift in Sources */,
 				D27437502211DC9F00B1E02F /* TiltShiftTableViewController.swift in Sources */,
 				F42A24F824D0346000EB55F8 /* TiltShiftOperation.swift in Sources */,
 				F47280FA24D189B10014F072 /* AsyncOperation.swift in Sources */,

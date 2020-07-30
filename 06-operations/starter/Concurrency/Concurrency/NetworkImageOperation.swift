@@ -30,7 +30,7 @@ import UIKit
 
 typealias ImageOperationCompletion = ((Data?, URLResponse?, Error?) -> Void)?
 
-final class NetworkImageOperation: AsyncOperation {
+final class NetworkImageOperation: AsyncOperation, ImageDataProvider {
 
   var image: UIImage?
   private let url: URL
