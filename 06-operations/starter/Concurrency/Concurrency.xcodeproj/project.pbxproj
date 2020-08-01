@@ -80,11 +80,11 @@
 				5394F02321864DF4006E754C /* LaunchScreen.storyboard */,
 				D2A5F2071F4A9144005CD714 /* Main.storyboard */,
 				F47280F924D189B10014F072 /* AsyncOperation.swift */,
+				F47280FD24D189FA0014F072 /* NetworkImageOperation.swift */,
 				D27437512211DFBB00B1E02F /* PhotoCell.swift */,
 				D2CC8F0E220890C50025B523 /* TiltShiftFilter.swift */,
 				D274374F2211DC9F00B1E02F /* TiltShiftTableViewController.swift */,
 				F42A24F724D0346000EB55F8 /* TiltShiftOperation.swift */,
-				F47280FD24D189FA0014F072 /* NetworkImageOperation.swift */,
 				F4EB999324D2C9F7005A5409 /* ImageDataProvider.swift */,
 			);
 			path = Concurrency;
